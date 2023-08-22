@@ -1,8 +1,10 @@
 <?php
 
 use Larke\Admin\Facade\Extension;
+use Larke\Admin\Extension\Manager;
 
-Extension::routes(function ($router) {
+
+(new Manager)->routes(function ($router) {
     $router->namespace('App\\Admin\\Http\\Controllers')
         ->group(function ($router) {
             $router->get('/', 'HomeController@index')->name('app-admin.home');

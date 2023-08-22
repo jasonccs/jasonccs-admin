@@ -16,11 +16,11 @@ use Larke\Admin\Http\Controller as BaseController;
  * @author lakego-admin
  */
 #[RouteRule(
-    title: "Home 控制器", 
-    desc:  "Home 控制器",
+    slug: "app-admin.home",
+    title: "Home 控制器",
+    desc: "Home 控制器",
     order: 9900,
-    auth:  true,
-    slug:  "app-admin.home"
+    auth: true
 )]
 class HomeController extends BaseController
 {
@@ -31,11 +31,11 @@ class HomeController extends BaseController
      * @return Response
      */
     #[RouteRule(
-        title:  "数据列表", 
-        desc:   "数据列表",
-        order:  9901,
         parent: "app-admin.home",
-        auth:   true
+        title: "数据列表",
+        desc: "数据列表",
+        order: 9901,
+        auth: true
     )]
     public function index(Request $request)
     {
