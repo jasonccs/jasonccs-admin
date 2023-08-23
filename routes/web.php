@@ -40,7 +40,7 @@ Route::post('/b', function (Request $request) {
 
 //抛出预期的错误，例如请求字段格式错误
 
-Route::get('/c', [Controller::class, 'store']);
+Route::get('/c', [Controller::class, 'store'])->middleware('validation');
 
 //，d法 抛出意外的错误。
 Route::post('/d', function (Request $request) {
