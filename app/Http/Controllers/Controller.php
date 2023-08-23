@@ -21,15 +21,16 @@ class Controller extends BaseController
      * @ValidateRequestParams(
      *     rules={
      *         "field1"={"NotNull", "Length(min=3,max=10)"},
-     *         "field2"={"Email"}
+     *         "field2"={"Email","NotNull"}
      *     },
      *     errorMessages={
      *         "field1"={
-     *             "Symfony\Component\Validator\Constraints\NotNull"="The field1 field is required.",
-     *             "Symfony\Component\Validator\Constraints\Length"="The field1 field length must be between 3 and 10 characters."
+     *             "NotNull"="必填啊.",
+     *             "Length"="长度 3-10 位啊."
      *         },
      *         "field2"={
-     *             "Symfony\Component\Validator\Constraints\Email"="The field2 field must be a valid email address."
+     *             "NotNull"="The field2 不能为空.",
+     *             "Email"="必须为有效的邮箱."
      *         }
      *     }
      * )
@@ -37,13 +38,7 @@ class Controller extends BaseController
     // 存储用户的信息
     public function store(Request $request, User $user): \Illuminate\Http\JsonResponse
     {
-        // 验证请求
-//        $errors = $user->validateRequest($request->all());
-//        if ($errors) {
-//            return JsonResponse::error(['errors' => $errors], 400);
-//        }
-        // 验证通过，继续处理逻辑...
-         return JsonResponse::success([], '保存成功');
+        return JsonResponse::success([], '保存成功');
     }
 
 }

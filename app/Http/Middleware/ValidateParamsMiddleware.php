@@ -3,16 +3,21 @@
 namespace App\Http\Middleware;
 
 use App\Http\Annotations\ValidateRequestParams;
+use App\Models\utils\JsonResponse;
 use Closure;
 use Doctrine\Common\Annotations\AnnotationReader;
 use ReflectionClass;
+use ReflectionException;
 use ReflectionMethod;
+use Symfony\Component\Validator\Constraint;
+use Symfony\Component\Validator\Constraints\Length;
+use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\Validator\Validation;
 
 class ValidateParamsMiddleware
 {
     /**
-     * @throws \ReflectionException
+     * @throws ReflectionException
      */
     public function handle($request, Closure $next)
     {
@@ -31,24 +36,20 @@ class ValidateParamsMiddleware
                 $errors = [];
 
                 foreach ($rules as $field => $constraints) {
-                    $value = $request->input($field);
+                    $value = $request->input($field,'');
                     $violations = $validator->validate($value, $this->buildConstraints($constraints));
 
                     if (count($violations) > 0) {
                         foreach ($violations as $violation) {
                             $fieldErrorMessages = $errorMessages[$field] ?? [];
                             $constraintClass = get_class($violation->getConstraint());
-                            $errorMessage = $fieldErrorMessages[$constraintClass] ?? $violation->getMessage();
-
-                            $errors[] = [
-                                'field' => $field,
-                                'message' => $errorMessage,
-                            ];
+                            $errorMessage = $fieldErrorMessages[trim(mb_substr($constraintClass,strrpos($constraintClass,'\\')),'\\')] ?? $violation->getMessage();
+                            $errors[] = $field.' '.$errorMessage;
                         }
                     }
                 }
                 if (!empty($errors)) {
-                    return response()->json(['errors' => $errors], 422);
+                    return JsonResponse::error(['errors' => $errors], 400);
                 }
             }
         }
@@ -56,22 +57,43 @@ class ValidateParamsMiddleware
         return $next($request);
     }
 
+    /**
+     * @throws ReflectionException
+     */
     private function buildConstraints($constraints): array
     {
         $builtConstraints = [];
 
         foreach ($constraints as $constraint) {
-            $constraintName = $constraint;
+            $constraintName = ucfirst($constraint);
             $constraintOptions = [];
 
             if (is_array($constraint)) {
-                $constraintName = key($constraint);
+                $constraintName = ucfirst(key($constraint));
                 $constraintOptions = $constraint[$constraintName];
+            }else{
+                if (preg_match('/(?<=\\()\\S+(?=\\))/',str_replace(' ', '', $constraintName),$match)){
+                    if (count($match)){
+                        foreach (explode(',',$match[0]) as $content) {
+                            list($key, $value) = explode("=", $content);
+                            $constraintOptions[$key] = $value;
+                        }
+                    }
+                }
             }
-            $class = 'Symfony\Component\Validator\Constraints\\' . $constraintName;
-            if (class_exists($class)) {
+
+            if (str_starts_with($constraintName,'Length(')) {
+                $constraintOptions['min'] =(int) $constraintOptions['min'] ?? null;
+                $constraintOptions['max'] =(int) $constraintOptions['max'] ?? null;
+                $builtConstraints=[ new Length($constraintOptions),new NotBlank()];
+                $class = get_class(new Length($constraintOptions));
+            }else{
+                $class = 'Symfony\Component\Validator\Constraints\\' . $constraintName;
                 $reflectionClass = new ReflectionClass($class);
                 $builtConstraints[] = $reflectionClass->newInstanceArgs($constraintOptions);
+            }
+            if (!class_exists($class)) {
+                throw new \Exception('类无法找不到，无法参与验证');
             }
         }
 
