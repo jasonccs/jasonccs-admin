@@ -26,8 +26,8 @@ Route::get('/a', function (Request $request) {
         'name'=>1,
         'age'=>19
     ];
-    return JsonResponse::success(['user' => $user]);
-});
+    return JsonResponse::success(['user' => $user,__('你好世界',[],'en')]);
+})->name('a-detail');
 
 //  b法，返回请求内容。
 Route::post('/b', function (Request $request) {
