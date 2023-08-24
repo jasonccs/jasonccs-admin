@@ -37,14 +37,15 @@ class ValidateParamsMiddleware
                 $validator = Validation::createValidator();
                 $errors = [];
                 foreach ($rules as $field => $constraints) {
-                    $value = $request->input(str_replace(' ', '', $field));
+                    $filed=str_replace(' ', '', $field);
+                    $value = $request->input($filed);
                     $violations = $validator->validate($value, $this->buildConstraints($constraints));
-
-                    if (count($violations) > 0) {
+                    if (count($violations)) {
                         foreach ($violations as $violation) {
-                            $fieldErrorMessages = $errorMessages[str_replace(' ', '', $field)] ?? [];
-                            $constraintClass = get_class($violation->getConstraint());
-                            $errorMessage = $fieldErrorMessages[str_replace(' ','',trim(mb_substr($constraintClass,strrpos($constraintClass,'\\')),'\\'))] ?? $violation->getMessage();
+                            $fieldErrorMessages = $errorMessages[$filed] ?? [];
+                            $implClass = $violation->getConstraint();
+                            $getClass = get_class($violation->getConstraint());
+                            $errorMessage = $fieldErrorMessages[str_replace(' ','',trim(mb_substr($getClass,strrpos($getClass,'\\')),'\\'))] ?? $violation->getMessage();
                             $errors[] = str_replace(' ', '', $field).' '.$errorMessage;
                         }
                     }
@@ -75,9 +76,13 @@ class ValidateParamsMiddleware
             }else{
                 if (preg_match('/(?<=\\()\\S+(?=\\))/',str_replace(' ', '', $constraintName),$match)){
                     if (count($match)){
-                        foreach (explode(',',$match[0]) as $content) {
-                            list($key, $value) = explode("=", $content);
-                            $constraintOptions[$key] = $value;
+                        if (str_starts_with($constraintName,'Length(')){ // 字符创长度判断 Length()
+                            foreach (explode(',',$match[0]) as $content) {
+                                list($key, $value) = explode("=", $content);
+                                $constraintOptions[$key] = $value;
+                            }
+                        }else if (str_starts_with($constraintName,'Regex(')){
+                            $constraintOptions = new Regex(['pattern' => $match[0]]);
                         }
                     }
                 }
@@ -89,20 +94,17 @@ class ValidateParamsMiddleware
                 $builtConstraints[] = new Length($constraintOptions);
                 $class = get_class(new Length($constraintOptions));
             }else if (str_starts_with($constraintName,'Regex(')){ // 对于正则表达式的校验
-                $constraint = new Collection([
-                    'name' => new Regex('/^[A-Za-z]+$/')
-                ]);
-                $builtConstraints[] = $constraint;
+                $builtConstraints[] = $constraintOptions;
+                $class = get_class($constraintOptions);
             }else{
                 $class = 'Symfony\Component\Validator\Constraints\\' . $constraintName;
                 $reflectionClass = new ReflectionClass($class);
                 $builtConstraints[] = $reflectionClass->newInstanceArgs($constraintOptions);
             }
             if (!class_exists($class)) {
-                throw new \Exception('类无法找不到，无法参与验证');
+                throw new \InvalidArgumentException('验证类无法找不到，无法参与验证');
             }
         }
-
         return $builtConstraints;
     }
 }

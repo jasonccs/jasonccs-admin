@@ -36,18 +36,18 @@ class Handler extends ExceptionHandler
     /**
      * Register the exception handling callbacks for the application.
      */
-    public function render($request, Throwable $exception): \Illuminate\Http\Response|\Illuminate\Http\JsonResponse|ResponseAlias|\Illuminate\Http\RedirectResponse
+    public function render($request, Throwable $e): \Illuminate\Http\Response|\Illuminate\Http\JsonResponse|ResponseAlias|\Illuminate\Http\RedirectResponse
     {
 
         if (!config('app.debug')) {
-            return  JsonResponse::error('Internal Server Error', ResponseAlias::HTTP_INTERNAL_SERVER_ERROR);
+            return JsonResponse::error('Internal Server Error', ResponseAlias::HTTP_INTERNAL_SERVER_ERROR);
         }
-        if ($exception instanceof ValidationException) { //bad req
-            return  JsonResponse::error($exception->errors(), ResponseAlias::HTTP_BAD_REQUEST);
-        }else if ($exception instanceof NotFoundHttpException){ //404
-            return  JsonResponse::error($exception->getMessage(), ResponseAlias::HTTP_NOT_FOUND);
+        if ($e instanceof ValidationException) { //bad req
+            return JsonResponse::error($e->errors(), ResponseAlias::HTTP_BAD_REQUEST);
+        } else if ($e instanceof NotFoundHttpException) { //404
+            return JsonResponse::error($e->getMessage(), ResponseAlias::HTTP_NOT_FOUND);
         }
-        return  JsonResponse::error($exception->getMessage(), ResponseAlias::HTTP_INTERNAL_SERVER_ERROR);
+        return JsonResponse::error(['message' => $e->getMessage(), 'line' => $e->getLine(), 'file' => $e->getFile(), 'trance' => array_slice($e->getTrace(), 0, 3)], ResponseAlias::HTTP_INTERNAL_SERVER_ERROR);
 
     }
 

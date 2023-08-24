@@ -34,7 +34,7 @@ class Controller extends BaseController
      *             "Email"="必须为有效的邮箱."
      *         },
      *         "age" ={
-     *              "Regex"="必须为字母数字组合类型"
+     *              "Regex"="必须为字母组合类型"
      *          }
      *     }
      * )
