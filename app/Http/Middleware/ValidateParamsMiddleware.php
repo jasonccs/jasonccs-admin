@@ -10,8 +10,10 @@ use ReflectionClass;
 use ReflectionException;
 use ReflectionMethod;
 use Symfony\Component\Validator\Constraint;
+use Symfony\Component\Validator\Constraints\Collection;
 use Symfony\Component\Validator\Constraints\Length;
 use Symfony\Component\Validator\Constraints\NotBlank;
+use Symfony\Component\Validator\Constraints\Regex;
 use Symfony\Component\Validator\Validation;
 
 class ValidateParamsMiddleware
@@ -31,20 +33,19 @@ class ValidateParamsMiddleware
         foreach ($annotations as $annotation) {
             if ($annotation instanceof ValidateRequestParams) {
                 $rules = $annotation->rules;
-                $errorMessages = $annotation->errorMessages;
+                $errorMessages = array_combine(array_map(fn($key) => str_replace(' ', '', $key), array_keys($annotation->errorMessages)),array_values($annotation->errorMessages));
                 $validator = Validation::createValidator();
                 $errors = [];
-
                 foreach ($rules as $field => $constraints) {
-                    $value = $request->input($field,'');
+                    $value = $request->input(str_replace(' ', '', $field));
                     $violations = $validator->validate($value, $this->buildConstraints($constraints));
 
                     if (count($violations) > 0) {
                         foreach ($violations as $violation) {
-                            $fieldErrorMessages = $errorMessages[$field] ?? [];
+                            $fieldErrorMessages = $errorMessages[str_replace(' ', '', $field)] ?? [];
                             $constraintClass = get_class($violation->getConstraint());
-                            $errorMessage = $fieldErrorMessages[trim(mb_substr($constraintClass,strrpos($constraintClass,'\\')),'\\')] ?? $violation->getMessage();
-                            $errors[] = $field.' '.$errorMessage;
+                            $errorMessage = $fieldErrorMessages[str_replace(' ','',trim(mb_substr($constraintClass,strrpos($constraintClass,'\\')),'\\'))] ?? $violation->getMessage();
+                            $errors[] = str_replace(' ', '', $field).' '.$errorMessage;
                         }
                     }
                 }
@@ -82,11 +83,16 @@ class ValidateParamsMiddleware
                 }
             }
 
-            if (str_starts_with($constraintName,'Length(')) {
+            if (str_starts_with($constraintName,'Length(')) { // 对于 长度的范围的控制
                 $constraintOptions['min'] =(int) $constraintOptions['min'] ?? null;
                 $constraintOptions['max'] =(int) $constraintOptions['max'] ?? null;
-                $builtConstraints=[ new Length($constraintOptions),new NotBlank()];
+                $builtConstraints[] = new Length($constraintOptions);
                 $class = get_class(new Length($constraintOptions));
+            }else if (str_starts_with($constraintName,'Regex(')){ // 对于正则表达式的校验
+                $constraint = new Collection([
+                    'name' => new Regex('/^[A-Za-z]+$/')
+                ]);
+                $builtConstraints[] = $constraint;
             }else{
                 $class = 'Symfony\Component\Validator\Constraints\\' . $constraintName;
                 $reflectionClass = new ReflectionClass($class);

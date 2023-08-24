@@ -20,18 +20,22 @@ class Controller extends BaseController
     /**
      * @ValidateRequestParams(
      *     rules={
-     *         "field1"={"NotNull", "Length(min=3,max=10)"},
-     *         "field2"={"Email","NotNull"}
+     *         "name"={"NotNull", "Length(min=3,max=10)"},
+     *         "email"={"Email","NotNull"},
+     *         "age"={"Regex(/^[A-Za-z]+$/)"}
      *     },
      *     errorMessages={
-     *         "field1"={
+     *         "name "={
      *             "NotNull"="必填啊.",
      *             "Length"="长度 3-10 位啊."
      *         },
-     *         "field2"={
-     *             "NotNull"="The field2 不能为空.",
+     *         "email"={
+     *             "NotNull"="不能为空.",
      *             "Email"="必须为有效的邮箱."
-     *         }
+     *         },
+     *         "age" ={
+     *              "Regex"="必须为字母数字组合类型"
+     *          }
      *     }
      * )
      */
