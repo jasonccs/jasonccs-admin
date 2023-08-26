@@ -9,6 +9,15 @@
         "id": "36cf5426e8038aeb58cb676bb981e18e"
     },
     {
+        "id": "6d04182214eba4d4a7036fd0b5b8ffc9",
+        "method": "OPTIONS",
+        "pid": 0,
+        "slug": "larke-admin.ext.log-viewer",
+        "sort": 101,
+        "title": "日志查看器",
+        "url": "#"
+    },
+    {
         "pid": "36cf5426e8038aeb58cb676bb981e18e",
         "title": "操作日志",
         "slug": "larke-admin.ext.operation-log",
@@ -16,6 +25,15 @@
         "method": "GET",
         "sort": 6,
         "id": "b0dd943f83bcc0ce0f1132355ba90b5d"
+    },
+    {
+        "id": "74f22118fa3961730f70ae1a6f44c611",
+        "method": "OPTIONS",
+        "pid": 0,
+        "slug": "larke-admin.ext.operation-log",
+        "sort": 106,
+        "title": "操作日志",
+        "url": "#"
     },
     {
         "pid": "0",
@@ -27,11 +45,29 @@
         "id": "9c08c1535973ca2228e2fdbe1e64c5cd"
     },
     {
+        "id": "c8d730080813fe0cd7249a08cb0f5b90",
+        "method": "OPTIONS",
+        "pid": 0,
+        "slug": "larke-admin.ext.sign-cert",
+        "sort": 111,
+        "title": "签名证书",
+        "url": "#"
+    },
+    {
         "id": "3fa4606706f3c2243317638b74128574",
         "method": "DELETE",
         "pid": "36cf5426e8038aeb58cb676bb981e18e",
         "slug": "larke-admin.log-viewer.delete",
         "sort": 4,
+        "title": "删除日志",
+        "url": "log-viewer/delete"
+    },
+    {
+        "id": "375b37c1a12410b9d69b062e8f155824",
+        "method": "DELETE",
+        "pid": "6d04182214eba4d4a7036fd0b5b8ffc9",
+        "slug": "larke-admin.log-viewer.delete",
+        "sort": 104,
         "title": "删除日志",
         "url": "log-viewer/delete"
     },
@@ -45,11 +81,29 @@
         "url": "log-viewer/download"
     },
     {
+        "id": "a560b09e4e32965fbc8ecd631b169b92",
+        "method": "GET",
+        "pid": "6d04182214eba4d4a7036fd0b5b8ffc9",
+        "slug": "larke-admin.log-viewer.download",
+        "sort": 105,
+        "title": "下载日志",
+        "url": "log-viewer/download"
+    },
+    {
         "id": "f2a466cd5a796464b31fa6fb4ff33834",
         "method": "GET",
         "pid": "36cf5426e8038aeb58cb676bb981e18e",
         "slug": "larke-admin.log-viewer.files",
         "sort": 2,
+        "title": "日志文件",
+        "url": "log-viewer/files"
+    },
+    {
+        "id": "b141aa632e03176744e97314de81d1ab",
+        "method": "GET",
+        "pid": "6d04182214eba4d4a7036fd0b5b8ffc9",
+        "slug": "larke-admin.log-viewer.files",
+        "sort": 102,
         "title": "日志文件",
         "url": "log-viewer/files"
     },
@@ -63,11 +117,29 @@
         "url": "log-viewer/logs"
     },
     {
+        "id": "b4e0ba8ffe7a72583e9fe61753a11e6f",
+        "method": "GET",
+        "pid": "6d04182214eba4d4a7036fd0b5b8ffc9",
+        "slug": "larke-admin.log-viewer.logs",
+        "sort": 103,
+        "title": "日志列表",
+        "url": "log-viewer/logs"
+    },
+    {
         "id": "24daf23d4c856178898ec3a42d343fc7",
         "method": "DELETE",
         "pid": "b0dd943f83bcc0ce0f1132355ba90b5d",
         "slug": "larke-admin.operation-log.clear",
         "sort": 9,
+        "title": "清空日志",
+        "url": "operation-log/clear"
+    },
+    {
+        "id": "bc1db86fc980a0eaf232b9456d5da99d",
+        "method": "DELETE",
+        "pid": "74f22118fa3961730f70ae1a6f44c611",
+        "slug": "larke-admin.operation-log.clear",
+        "sort": 109,
         "title": "清空日志",
         "url": "operation-log/clear"
     },
@@ -81,11 +153,29 @@
         "url": "operation-log/{id}"
     },
     {
+        "id": "1b85f4cc24f7d0be6ebf6c2a5754e3c9",
+        "method": "DELETE",
+        "pid": "74f22118fa3961730f70ae1a6f44c611",
+        "slug": "larke-admin.operation-log.delete",
+        "sort": 110,
+        "title": "删除日志",
+        "url": "operation-log/{id}"
+    },
+    {
         "id": "1f956774b403f7c10ddd9487602d4e23",
         "method": "GET",
         "pid": "b0dd943f83bcc0ce0f1132355ba90b5d",
         "slug": "larke-admin.operation-log.detail",
         "sort": 8,
+        "title": "日志详情",
+        "url": "operation-log/{id}"
+    },
+    {
+        "id": "eddc1c89eecae49f66af2757cc42e80a",
+        "method": "GET",
+        "pid": "74f22118fa3961730f70ae1a6f44c611",
+        "slug": "larke-admin.operation-log.detail",
+        "sort": 108,
         "title": "日志详情",
         "url": "operation-log/{id}"
     },
@@ -99,11 +189,29 @@
         "url": "operation-log"
     },
     {
+        "id": "f0f28b6325c9792ec838d0207f9b6112",
+        "method": "GET",
+        "pid": "74f22118fa3961730f70ae1a6f44c611",
+        "slug": "larke-admin.operation-log.index",
+        "sort": 107,
+        "title": "日志列表",
+        "url": "operation-log"
+    },
+    {
         "id": "28a0efb3f1ac8c5bd2c631addc5af606",
         "method": "POST",
         "pid": "9c08c1535973ca2228e2fdbe1e64c5cd",
         "slug": "larke-admin.sign-cert.ecdsa",
         "sort": 16,
+        "title": "ecdsa证书",
+        "url": "sign-cert/ecdsa"
+    },
+    {
+        "id": "fff6678f5a660f105d6861debd4e2486",
+        "method": "POST",
+        "pid": "c8d730080813fe0cd7249a08cb0f5b90",
+        "slug": "larke-admin.sign-cert.ecdsa",
+        "sort": 116,
         "title": "ecdsa证书",
         "url": "sign-cert/ecdsa"
     },
@@ -117,11 +225,29 @@
         "url": "sign-cert/eddsa"
     },
     {
+        "id": "3a226c01d5cf3c08825b425e024757fe",
+        "method": "POST",
+        "pid": "c8d730080813fe0cd7249a08cb0f5b90",
+        "slug": "larke-admin.sign-cert.eddsa",
+        "sort": 117,
+        "title": "eddsa证书",
+        "url": "sign-cert/eddsa"
+    },
+    {
         "id": "89f4e13fba7f86e6ca1a9cc494ee3f15",
         "method": "POST",
         "pid": "9c08c1535973ca2228e2fdbe1e64c5cd",
         "slug": "larke-admin.sign-cert.hmac",
         "sort": 12,
+        "title": "hmac证书",
+        "url": "sign-cert/hmac"
+    },
+    {
+        "id": "1d831bc1de1b9bdf57b23ad36f5c9b2b",
+        "method": "POST",
+        "pid": "c8d730080813fe0cd7249a08cb0f5b90",
+        "slug": "larke-admin.sign-cert.hmac",
+        "sort": 112,
         "title": "hmac证书",
         "url": "sign-cert/hmac"
     },
@@ -135,6 +261,15 @@
         "url": "sign-cert/rsa"
     },
     {
+        "id": "a429c969be8d61eaf91e282f3e2fee27",
+        "method": "POST",
+        "pid": "c8d730080813fe0cd7249a08cb0f5b90",
+        "slug": "larke-admin.sign-cert.rsa",
+        "sort": 113,
+        "title": "rsa证书",
+        "url": "sign-cert/rsa"
+    },
+    {
         "id": "cc044f20f48c5d6232bac99980c980b5",
         "method": "POST",
         "pid": "9c08c1535973ca2228e2fdbe1e64c5cd",
@@ -144,11 +279,29 @@
         "url": "sign-cert/rsa-pfx"
     },
     {
+        "id": "b3ae1eb085e19003553f9b299b6b9d20",
+        "method": "POST",
+        "pid": "c8d730080813fe0cd7249a08cb0f5b90",
+        "slug": "larke-admin.sign-cert.rsa-pfx",
+        "sort": 114,
+        "title": "rsa-pfx证书",
+        "url": "sign-cert/rsa-pfx"
+    },
+    {
         "id": "89cb3d4791f489b3794ec95dc7a0d50b",
         "method": "POST",
         "pid": "9c08c1535973ca2228e2fdbe1e64c5cd",
         "slug": "larke-admin.sign-cert.rsa-pfx-pem",
         "sort": 15,
+        "title": "pfx转pem证书",
+        "url": "sign-cert/rsa-pfx-pem"
+    },
+    {
+        "id": "2e226ac61aeeadf486dffc80962864f8",
+        "method": "POST",
+        "pid": "c8d730080813fe0cd7249a08cb0f5b90",
+        "slug": "larke-admin.sign-cert.rsa-pfx-pem",
+        "sort": 115,
         "title": "pfx转pem证书",
         "url": "sign-cert/rsa-pfx-pem"
     },

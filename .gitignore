@@ -20,3 +20,4 @@ yarn-error.log
 /.vscode
 /xdebug.log
 *.zip
+/public/.rnd
