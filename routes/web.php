@@ -74,3 +74,8 @@ Route::get('/e', function (Request $request) {
         return JsonResponse::error('Invalid brackets', 400);
     }
 });
+
+// 根据IP 获取定位的城市
+Route::get('/f', function (Request $request) {
+    return JsonResponse::success(geoip()->getLocation('120.79.183.110')->toArray());
+})->name('f-detail');
