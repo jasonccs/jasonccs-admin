@@ -72,3 +72,11 @@
     Route::get('/f', function (Request $request) {
         return JsonResponse::success(geoip()->getLocation('120.79.183.110')->toArray());
     })->name('f-detail');
+
+
+    // 获取ip 城市定位
+    Route::get('/g', function (Request $request) {
+
+    //    $location = GeoIP::getLocation('222.128.24.20')->toArray();
+        dd(geoip('36.157.165.83')->toArray());
+    });
