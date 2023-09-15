@@ -21,3 +21,4 @@ yarn-error.log
 /xdebug.log
 *.zip
 /public/.rnd
+composer.lock
