@@ -1,4 +1,8 @@
 
+
+## Telescope 调试工具 查看所有开发的消息 env 为local  其他需要密码 授权访问
+http://json-admin.com/telescope/requests
+
 ## 使用说明
 - 打开route/web.php 找到k的路由
 - [开启一个创建用户的消息队列]

@@ -76,7 +76,7 @@ class InvoicePaid extends Notification implements ShouldQueue
      */
     public function via(object $notifiable): array
     {
-        return ['mail'];
+        return ['mail','database'];
     }
 
 
@@ -99,13 +99,16 @@ class InvoicePaid extends Notification implements ShouldQueue
     }
 
     /**
-     * 获取通知的数组表示形式。
+     *  通知渠道将通知信息存储在一个数据库 notifications 表中。该表将包含通知类型以及描述通知的 JSON 数据结构等信息
      * @return array<string, mixed>
      */
     public function toArray(object $notifiable): array
     {
         return [
-
+            'type' => 'send email',
+            'notifiable_type' => 'send email',
+            'notifiable_id' => 1111,
+            'data' => $notifiable->toArray(),
         ];
     }
 

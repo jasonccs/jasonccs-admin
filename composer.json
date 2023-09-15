@@ -13,6 +13,8 @@
         "laravel/framework": "^10.10",
         "laravel/sanctum": "^3.2",
         "laravel/slack-notification-channel": "^3.0",
+        "laravel/socialite": "^5.9",
+        "laravel/telescope": "^4.16",
         "laravel/tinker": "^2.8",
         "laravel/vonage-notification-channel": "^3.2",
         "larke/log-viewer": "^1.4.1",
@@ -62,7 +64,9 @@
     },
     "extra": {
         "laravel": {
-            "dont-discover": []
+            "dont-discover": [
+                "laravel/telescope"
+            ]
         }
     },
     "config": {
