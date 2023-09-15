@@ -1,26 +1,17 @@
 <?php
 
     use App\Http\Controllers\Controller;
+    use App\Jobs\SendUserJob;
     use App\Models\User;
     use App\Models\utils\JsonResponse;
     use App\Notifications\InvoicePaid;
     use Illuminate\Http\Request;
+    use Illuminate\Notifications\Messages\MailMessage;
     use Illuminate\Support\Facades\Notification;
     use Illuminate\Support\Facades\Route;
     use Rap2hpoutre\LaravelLogViewer\LogViewerController;
 
-    /*
-    |--------------------------------------------------------------------------
-    | Web Routes
-    |--------------------------------------------------------------------------
-    |
-    | Here is where you can register web routes for your application. These
-    | routes are loaded by the RouteServiceProvider and all of them will
-    | be assigned to the "web" middleware group. Make something great!
-    |
-    */
-
-// 日志插件
+    // 日志插件
     Route::get('logs', [LogViewerController::class, 'index']);
 
     // a法，返回请求内容。
@@ -44,18 +35,38 @@
 //抛出预期的错误，例如请求字段格式错误
     Route::get('/c', [Controller::class, 'store'])->middleware('validation');
 
-    // a法，返回请求内容。
+    // 发送消息队列
     Route::get('/d', function (Request $request) {
-        $invoice = [
-            'name' => 1,
-            'age' => 19
-        ];
-        $user = ['1521910992@qq.com'];
+        //php artisan queue:listen database --queue='notifyEmail' --tries=3  --sleep=3 --timeout=60
         $users = User::whereIn('id', [1, 2, 3])->get(); // 获取要通知的用户
-        // 延迟推送
-        Notification::send($users, (new InvoicePaid($invoice)));
-        return JsonResponse::success(['user' => $user, __('你好世界', [], 'en')]);
-    })->name('a-detail');
+        Notification::send($users, (new InvoicePaid())->onQueue('notifyEmail'));
+        // 或者这个
+//      Notification::route('mail','1521910992@qq.com')->notify(new InvoicePaid());
+        return JsonResponse::success('邮件队列通知发送成功');
+
+    })->name('d-detail');
+
+    //发送一个延迟的队列 （创建用户的其他的信息）
+    Route::get('/k', function (Request $request) {
+        $user = [
+            'name' => '字段是',
+            'password' => '字段是',
+            'email' => '152921@qq.com',
+        ];
+        dispatch(new SendUserJob($user))->onQueue('userCreateTask')->onConnection('database')->delay(5); // 使用的是  database 存储驱动
+        # 最后执行 php artisan  queue:work  database --queue='userCreateTask'  --tries=3 --sleep=3 --timeout=60
+    })->name('k-detail');
+
+    // 查询发送的 使用 Notification 通知，进行分页
+    Route::get('/h', function (Request $request) {
+
+        $user = User::findOrFail(1);
+        $notifications = $user->notifications()->paginate(20);
+        return JsonResponse::success($notifications);
+
+    })->name('h-detail');
+
+
 
 // 根据IP 获取定位的城市
     Route::get('/f', function (Request $request) {

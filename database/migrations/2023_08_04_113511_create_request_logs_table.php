@@ -13,7 +13,12 @@ return new class extends Migration
     {
         Schema::create('request_logs', function (Blueprint $table) {
             $table->id();
-            $table->timestamps();
+            $table->string('request_id')->unique()->nullable();
+            $table->string('method');
+            $table->string('path');
+            $table->text('request_data')->nullable();
+            $table->text('response_content')->nullable();
+            $table->timestamp('created_at')->useCurrent();
         });
     }
 

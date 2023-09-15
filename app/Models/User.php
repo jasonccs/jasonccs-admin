@@ -44,10 +44,12 @@ class User extends Authenticatable
      *
      * @var array<string, string>
      */
-    protected $casts = [
-        'name' => 'required|between:2,6',
-        'password' => 'required|numeric',
-    ];
+//    protected $casts = [
+//        'name' => 'required|between:2,6',
+//        'password' => 'required|numeric',
+//    ];
+
+
     public function validateRequest($requestData): ?\Illuminate\Support\MessageBag
     {
         $rules = [
