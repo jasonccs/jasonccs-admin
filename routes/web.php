@@ -13,6 +13,21 @@
 
     // 日志插件
     Route::get('logs', [LogViewerController::class, 'index']);
+    // 数据监控面板
+//    Route::get('/telescope', [Controller::class, 'telescope']);
+
+    Route::get('/slack', function (Request $request) {
+        logger()->channel('slack')->critical(
+            '错误的消息',
+            [
+                'environment' => app()->environment(),
+                'url' => app()->runningInConsole() ? 'CLI' : request()->method() . ' ' . request()->fullUrl(),
+                'user' => '',
+                'view in Telescope' => url('telescope/exceptions/' . 1),
+            ]
+        );
+        return JsonResponse::success('发了slack 通知 请注意查收');
+    })->name('a-detail');
 
     // a法，返回请求内容。
     Route::get('/a', function (Request $request) {

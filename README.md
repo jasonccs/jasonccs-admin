@@ -1,7 +1,14 @@
 
+## 清除缓存
+php artisan optimize:clear
 
 ## Telescope 调试工具 查看所有开发的消息 env 为local  其他需要密码 授权访问
 http://json-admin.com/telescope/requests
+
+web.php 开启如下的路由，在product 的 开发环境 进行登录授权访问
+Route::get('/telescope', [Controller::class, 'telescope']);
+
+
 
 ## GeoIP 根据ip 获取用户地理位置信息
 - 获取最新的ip的定位数据库 参考 (https://learnku.com/laravel/t/39865)

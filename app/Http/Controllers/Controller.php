@@ -10,6 +10,7 @@ use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Foundation\Validation\ValidatesRequests;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller as BaseController;
+use Illuminate\Support\Facades\Auth;
 use Larke\Admin\Annotation\RouteRule;
 
 class Controller extends BaseController
@@ -42,6 +43,14 @@ class Controller extends BaseController
     // 存储用户的信息
     public function store(Request $request, User $user): \Illuminate\Http\JsonResponse
     {
+        return JsonResponse::success([], '保存成功');
+    }
+
+    public function telescope(Request $request): \Illuminate\Http\JsonResponse
+    {
+        $user=Auth::loginUsingId(1); // 注意 App\Providers\TelescopeServiceProvider 中的 gate() 邮箱对应才有权限
+//        Auth::logout();// 退出
+//        dd($user);
         return JsonResponse::success([], '保存成功');
     }
 

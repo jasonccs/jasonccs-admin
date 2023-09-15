@@ -187,6 +187,7 @@ return [
     'aliases' => Facade::defaultAliases()->merge([
         // 'Example' => App\Facades\Example::class,
         'GeoIP' => \Torann\GeoIP\Facades\GeoIP::class,
+        'Auth' => Illuminate\Support\Facades\Auth::class,
     ])->toArray(),
 
 ];
