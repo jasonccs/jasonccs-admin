@@ -1,17 +1,19 @@
 <?php
 
-    use App\Http\Controllers\Controller;
-    use App\Jobs\SendUserJob;
-    use App\Models\User;
-    use App\Models\utils\JsonResponse;
-    use App\Notifications\InvoicePaid;
-    use Illuminate\Http\Request;
-    use Illuminate\Notifications\Messages\MailMessage;
-    use Illuminate\Support\Facades\Notification;
-    use Illuminate\Support\Facades\Route;
-    use Rap2hpoutre\LaravelLogViewer\LogViewerController;
+use App\Http\Controllers\Controller;
+use App\Http\Controllers\Passport\PassportController;
+use App\Jobs\SendUserJob;
+use App\Models\User\User;
+use App\Models\utils\JsonResponse;
+use App\Notifications\InvoicePaid;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Notification;
+use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Str;
+use Rap2hpoutre\LaravelLogViewer\LogViewerController;
 
-    // 日志插件
+// 日志插件
     Route::get('logs', [LogViewerController::class, 'index']);
     // 数据监控面板
 //    Route::get('/telescope', [Controller::class, 'telescope']);
@@ -29,6 +31,17 @@
         return JsonResponse::success('发了slack 通知 请注意查收');
     })->name('a-detail');
 
+
+//    Route::middleware(['throttle:uploads'])->namespace('App\Http\Controllers\Passport')->group(function ($outer) {
+    Route::namespace('App\Http\Controllers\Passport')->group(function ($outer) {
+
+        Route::controller(PassportController::class)->group(function () {
+            Route::get('/orders/{id}', 'show');
+            Route::get('/passport', 'passport')->name('passport');
+        });
+
+    });
+
     // a法，返回请求内容。
     Route::get('/a', function (Request $request) {
         $user = [
@@ -39,12 +52,20 @@
     })->name('a-detail');
 
 //  b法，返回请求内容。
-    Route::post('/b', function (Request $request) {
-        $user = [
-            'name' => 1,
-            'age' => 19
-        ];
-        return JsonResponse::success(['user' => $user]);
+    Route::get('/b', function (Request $request) {
+        $request->session()->put('state', $state = Str::random(40));
+        $http = new GuzzleHttp\Client;
+        $response = $http->post('http://jason-admin.com/oauth/token', [
+            'form_params' => [
+                'grant_type' => 'authorization_code',
+                'client_id' => '3',
+                'client_secret' => '8FiWSyWry2ckfX7tJyCDDbV6Wj9eOYMohBhO8cgi',
+                'redirect_uri' => 'http://jason-admin.com/b',
+                'code' => $request->input('code'),
+            ],
+        ]);
+
+        return json_decode((string) $response->getBody(), true);
     });
 
 //抛出预期的错误，例如请求字段格式错误
@@ -95,3 +116,11 @@
     //    $location = GeoIP::getLocation('222.128.24.20')->toArray();
         dd(geoip('36.157.165.83')->toArray());
     });
+
+Auth::routes();
+
+Route::get('/home', [\App\Http\Controllers\Web\HomeController::class, 'index'])->name('home');
+Route::get('/logout', [\App\Http\Controllers\Web\HomeController::class, 'logout'])->name('logout');
+
+
+

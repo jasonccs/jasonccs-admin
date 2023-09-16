@@ -6,6 +6,8 @@
 /public/extension
 /storage/*.key
 /vendor
+node_modules
+.rnd
 .env
 .env.backup
 .env.production

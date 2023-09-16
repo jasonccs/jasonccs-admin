@@ -9,6 +9,7 @@ use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Validation\ValidationException;
 use Symfony\Component\HttpFoundation\Response as ResponseAlias;
+use Symfony\Component\HttpKernel\Exception\MethodNotAllowedHttpException;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Throwable;
 
@@ -46,6 +47,8 @@ class Handler extends ExceptionHandler
             return JsonResponse::error($e->errors(), ResponseAlias::HTTP_BAD_REQUEST);
         } else if ($e instanceof NotFoundHttpException) { //404
             return JsonResponse::error($e->getMessage(), ResponseAlias::HTTP_NOT_FOUND);
+        }else if ($e instanceof  MethodNotAllowedHttpException){
+            return JsonResponse::error('请求方式错误', ResponseAlias::HTTP_NOT_FOUND);
         }
         return JsonResponse::error(['message' => $e->getMessage(), 'line' => $e->getLine(), 'file' => $e->getFile(), 'trance' => array_slice($e->getTrace(), 0, 3)], ResponseAlias::HTTP_INTERNAL_SERVER_ERROR);
 

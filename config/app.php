@@ -171,6 +171,7 @@ return [
         App\Providers\RouteServiceProvider::class,
         App\Providers\TelescopeServiceProvider::class,
         \Torann\GeoIP\GeoIPServiceProvider::class,
+        Tymon\JWTAuth\Providers\LaravelServiceProvider::class,
     ])->toArray(),
 
     /*
@@ -188,6 +189,8 @@ return [
         // 'Example' => App\Facades\Example::class,
         'GeoIP' => \Torann\GeoIP\Facades\GeoIP::class,
         'Auth' => Illuminate\Support\Facades\Auth::class,
+//        'JWTAuth' => Tymon\JWTAuth\Facades\JWTAuth::class,
+//        'JWTFactory' => Tymon\JWTAuth\Facades\JWTFactory::class,
     ])->toArray(),
 
 ];

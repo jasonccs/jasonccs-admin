@@ -3,15 +3,13 @@
 namespace App\Http\Controllers;
 
 use App\Http\Annotations\ValidateRequestParams;
-use App\Models\User;
+use App\Models\User\User;
 use App\Models\utils\JsonResponse;
-use Doctrine\Common\Annotations\AnnotationReader;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Foundation\Validation\ValidatesRequests;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller as BaseController;
 use Illuminate\Support\Facades\Auth;
-use Larke\Admin\Annotation\RouteRule;
 
 class Controller extends BaseController
 {

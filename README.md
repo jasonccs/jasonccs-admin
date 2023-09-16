@@ -1,4 +1,23 @@
 
+http://jason-admin.com/login
+
+jwt-auth secret [APhjdVYFvyBSi1Xe3o46f8y7ljIv8QeE5IgGTVgf8S4I7OwS7mNDr3mq8wk0XlFd] set successfully.
+
+jwt 登录
+http://jason-admin.com/api/auth/login
+
+注册
+http://jason-admin.com/api/auth/register
+
+退出
+http://jason-admin.com/api/auth/logout
+
+刷新token
+http://jason-admin.com/api/auth/refresh
+
+带授权头 Authorization 能获取用户登录的信息 
+http://jason-admin.com/api/auth/me
+
 ## 清除缓存
 php artisan optimize:clear
 

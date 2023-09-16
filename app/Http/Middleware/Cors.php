@@ -11,6 +11,7 @@ class Cors
 
     private array $allow_origin = [
         'http://localhost:9527',
+        'http://localhost:8080',
         'http://jason-admin.whweimei.cn'
     ];
 

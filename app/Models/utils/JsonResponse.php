@@ -25,6 +25,6 @@ class JsonResponse
             'message' => $message,
             'data' => $data,
         ];
-        return response()->json($response, $statusCode);
+        return response()->json($response, $statusCode)->setEncodingOptions(JSON_UNESCAPED_UNICODE);
     }
 }
