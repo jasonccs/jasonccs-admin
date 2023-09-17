@@ -50,7 +50,8 @@ class Handler extends ExceptionHandler
         }else if ($e instanceof  MethodNotAllowedHttpException){
             return JsonResponse::error('请求方式错误', ResponseAlias::HTTP_NOT_FOUND);
         }
-        return JsonResponse::error(['message' => $e->getMessage(), 'line' => $e->getLine(), 'file' => $e->getFile(), 'trance' => array_slice($e->getTrace(), 0, 3)], ResponseAlias::HTTP_INTERNAL_SERVER_ERROR);
+        return parent::render($request,$e);
+        return JsonResponse::error(['path'=>$request->getUri(),'message' => $e->getMessage(), 'line' => $e->getLine(), 'file' => $e->getFile(), 'trance' => array_slice($e->getTrace(), 0, 3)], ResponseAlias::HTTP_INTERNAL_SERVER_ERROR);
 
     }
 

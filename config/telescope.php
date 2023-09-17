@@ -76,8 +76,8 @@ return [
     */
 
     'middleware' => [
-        'web',
-        Authorize::class,
+        'larke-admin.auth',
+//        Authorize::class,
     ],
 
     /*

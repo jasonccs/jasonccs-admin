@@ -7,6 +7,8 @@ use Closure;
 use Symfony\Component\HttpFoundation\Response;
 use Tymon\JWTAuth\Exceptions\JWTException;
 use Tymon\JWTAuth\Http\Middleware\BaseMiddleware;
+use Yansongda\Supports\Str;
+use Illuminate\Support\Facades\Auth;
 
 class OauthApiTokenMiddleware extends   BaseMiddleware{
     /**
@@ -18,6 +20,12 @@ class OauthApiTokenMiddleware extends   BaseMiddleware{
     {
 
         try {
+            $origin = $request->server('REQUEST_URI') ?: '';
+//
+            if (Str::startsWith($origin,'/telescope')){
+//                return redirect()->route('login',['errors'=>[]]);
+                return redirect('api/auth/c')->with('status', 'Profile updated!');
+            }
             $user = $this->auth?->parseToken()->authenticate();
         } catch (\Exception $e) {
             if ($e instanceof \Tymon\JWTAuth\Exceptions\TokenInvalidException) {
