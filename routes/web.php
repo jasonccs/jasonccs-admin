@@ -117,10 +117,18 @@ use Rap2hpoutre\LaravelLogViewer\LogViewerController;
         dd(geoip('36.157.165.83')->toArray());
     });
 
-Auth::routes();
+//Auth::routes();
 
 Route::get('/home', [\App\Http\Controllers\Web\HomeController::class, 'index'])->name('home');
 Route::get('/logout', [\App\Http\Controllers\Web\HomeController::class, 'logout'])->name('logout');
 
-
-
+//Route::namespace('App\Http\Controllers\Auth')->group(function ($outer) {
+//
+//    Route::get('login', 'LoginController@showLoginForm')->name('login');
+//
+//    Route::post('login', 'LoginController@login');
+//
+//});
+Route::get('/login', function () {
+    return view('login');
+});

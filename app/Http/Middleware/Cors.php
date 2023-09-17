@@ -4,6 +4,7 @@ namespace App\Http\Middleware;
 
 use Closure;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 use Symfony\Component\HttpFoundation\Response;
 
 class Cors
@@ -36,4 +37,13 @@ class Cors
         }
         return $response;
     }
+
+    /**
+     * 在响应发送到浏览器后处理任务。
+     */
+    public function terminate(Request $request, Response $response): void
+    {
+
+    }
+
 }

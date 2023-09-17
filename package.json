@@ -16,6 +16,12 @@
         "vue": "^3.2.37"
     },
     "dependencies": {
-        "jquery": "^3.7.1"
+        "element-plus": "^2.3.14",
+        "element-ui": "^2.13.2",
+        "jquery": "^3.7.1",
+        "js-md5": "^0.7.3",
+        "jsencrypt": "^3.3.2",
+        "vue-i18n": "^9.4.1",
+        "vuex": "^4.1.0"
     }
 }
