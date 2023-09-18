@@ -28,6 +28,13 @@ export default defineConfig({
             symbolId: 'icon-[dir]-[name]'
         })
     ],
+    css: {
+        preprocessorOptions: {
+            scss: {
+                additionalData: `@import "resources/css/global.scss";` //公共样式地址
+            }
+        }
+    },
     resolve: {
         alias: {
             vue: 'vue/dist/vue.esm-bundler.js',

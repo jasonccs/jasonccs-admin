@@ -1,0 +1,7 @@
+:deep(.el-input__wrapper){
+    display:block;
+    background-color: transparent!important;
+    // 如果没有下面这一行样式的话 无法对border进行自定义修改
+    box-shadow: 0 0 0 0px var(--el-input-border-color, var(--el-border-color)) inset;
+    border: none; /* 对border进行样式修改 */
+}
