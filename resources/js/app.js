@@ -5,6 +5,7 @@
  */
 // https://blog.csdn.net/m0_58565372/article/details/131332115 vue-i18n 实现国际化，支持切换不同语言
 import './bootstrap';
+import '../css/app.css';
 import { createApp } from 'vue';
 import store from './store'; // 导入 Vuex store
 // import 'element-ui/lib/theme-chalk/index.css'
@@ -21,5 +22,4 @@ Object.entries(import.meta.glob('./**/*.vue', { eager: true })).forEach(([path, 
 app.component('svg-icon', SvgIcon);
 app.use(ElementPlus);
 app.use(store);
-
 app.mount('#app');

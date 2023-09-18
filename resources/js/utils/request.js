@@ -1,9 +1,10 @@
 import axios from 'axios'
 import store from '../store'
+import {ElMessage,ElMessageBox} from 'element-plus'
 
 // create an axios instance
 const service = axios.create({
-    baseURL: 'http://jason-admin.com/a/', // url = base url + request url
+    baseURL: import.meta.env.VITE_BASE_URL, // url = base url + request url
     timeout: 5000 // request timeout
 })
 
@@ -63,7 +64,7 @@ service.interceptors.response.use(
             // Token expires;
             else if (res.code === 104 || res.code === 107) {
                 // to re-login
-                this.$message.confirm('登陆已过期，是否重新登陆？', '登陆提示', {
+                ElMessageBox.confirm('登陆已过期，是否重新登陆？', '登陆提示', {
                     confirmButtonText: '重登',
                     cancelButtonText: '取消',
                     type: 'warning'
@@ -85,7 +86,7 @@ service.interceptors.response.use(
             }
 
             // 通用错误
-            Message({
+            ElMessage({
                 message: res.message || 'Error',
                 type: 'error',
                 duration: 3 * 1000
@@ -98,7 +99,7 @@ service.interceptors.response.use(
     },
     error => {
         console.log('err' + error) // for debug
-        Message({
+        ElMessage({
             message: error.message,
             type: 'error',
             duration: 3 * 1000

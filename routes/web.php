@@ -43,7 +43,7 @@ use Rap2hpoutre\LaravelLogViewer\LogViewerController;
     });
 
     // a法，返回请求内容。
-    Route::get('/a', function (Request $request) {
+    Route::get('/aa', function (Request $request) {
         $user = [
             'name' => 1,
             'age' => 19
@@ -129,6 +129,6 @@ Route::get('/logout', [\App\Http\Controllers\Web\HomeController::class, 'logout'
 //    Route::post('login', 'LoginController@login');
 //
 //});
-Route::get('/login', function () {
+Route::get('/login2', function () {
     return view('login');
 });

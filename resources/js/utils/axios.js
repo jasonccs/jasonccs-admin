@@ -1,9 +1,10 @@
 import axios from 'axios'
 import store from '../store'
+console.log(import.meta.env)
 
 // create an axios instance
 const service = axios.create({
-    baseURL: 'http://jason-admin.com/a/', // url = base url + request url
+    baseURL: import.meta.env.VITE_BASE_URL, // url = base url + request url
     // withCredentials: true, // send cookies when cross-domain requests
     timeout: 5000 // request timeout
 })
