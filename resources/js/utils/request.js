@@ -1,6 +1,5 @@
 import axios from 'axios'
 import store from '../store'
-// import { MessageBox, Message } from 'element-ui'
 
 // create an axios instance
 const service = axios.create({
@@ -86,7 +85,7 @@ service.interceptors.response.use(
             }
 
             // 通用错误
-            this.$message({
+            Message({
                 message: res.message || 'Error',
                 type: 'error',
                 duration: 3 * 1000
@@ -99,7 +98,7 @@ service.interceptors.response.use(
     },
     error => {
         console.log('err' + error) // for debug
-        this.$message({
+        Message({
             message: error.message,
             type: 'error',
             duration: 3 * 1000

@@ -1,6 +1,8 @@
 import { defineConfig } from 'vite';
 import laravel from 'laravel-vite-plugin';
 import vue from '@vitejs/plugin-vue';
+import { createSvgIconsPlugin }   from 'vite-plugin-svg-icons'; // 版本不同引入方式不同
+import path from 'path'
 
 export default defineConfig({
     plugins: [
@@ -19,6 +21,12 @@ export default defineConfig({
                 },
             },
         }),
+        createSvgIconsPlugin({
+            // 指定需要缓存的图标文件夹
+            iconDirs: [path.resolve(process.cwd(), 'resources/assets/icons/svg')],
+            // 指定symbolId格式
+            symbolId: 'icon-[dir]-[name]'
+        })
     ],
     resolve: {
         alias: {

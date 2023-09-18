@@ -10,12 +10,15 @@ import store from './store'; // 导入 Vuex store
 // import 'element-ui/lib/theme-chalk/index.css'
 import 'element-plus/dist/index.css'
 import ElementPlus from 'element-plus';
+import 'virtual:svg-icons-register'
+import SvgIcon from '../js/components/SvgIcon/index.vue';
 
 const app = createApp({});
 
 Object.entries(import.meta.glob('./**/*.vue', { eager: true })).forEach(([path, definition]) => {
     app.component(path.split('/').pop().replace(/\.\w+$/, ''), definition.default);
 });
+app.component('svg-icon', SvgIcon);
 app.use(ElementPlus);
 app.use(store);
 

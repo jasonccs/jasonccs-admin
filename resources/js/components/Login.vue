@@ -23,7 +23,7 @@
                 />
             </el-form-item>
 
-            <el-tooltip v-model="capsTooltip" content="Caps lock is On" placement="right" manual>
+            <el-tooltip v-model="capsTooltip" content="查看密码" placement="right" manual>
                 <el-form-item prop="password">
           <span class="svg-container">
             <svg-icon icon-class="password" />
@@ -275,6 +275,18 @@ $cursor: #fff;
 $bg:#2d3a4b;
 $dark_gray:#889aa4;
 $light_gray:#eee;
+:deep(.el-input__wrapper){
+    display:block;
+    background-color: transparent!important;
+    // 如果没有下面这一行样式的话 无法对border进行自定义修改
+    box-shadow: 0 0 0 0px var(--el-input-border-color, var(--el-border-color)) inset;
+    border: none; /* 对border进行样式修改 */
+}
+.el-form-item {
+    display: flex;
+    --font-size: 14px;
+    margin-bottom: 25px;
+}
 
 .login-container {
     min-height: 100%;
