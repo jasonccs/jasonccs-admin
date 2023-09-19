@@ -22,7 +22,7 @@ class AppServiceProvider extends ServiceProvider
     public function boot(): void
     {
         Schema::defaultStringLength(191);
-        Carbon::setLocale('zh'); // 设置日期时间的本地化语言，可根据需要修改
+        Carbon::setLocale('zh-CN'); // 设置日期时间的本地化语言，可根据需要修改
         Carbon::setToStringFormat('Y-m-d H:i:s'); // 设置日期时间的字符串格式，可根据需要修改
         Carbon::setTestNow(Carbon::now()); // 设置当前时间为测试时间，可根据需要修改
 //        if ($this->app->environment('local')) {

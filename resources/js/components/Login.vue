@@ -84,6 +84,7 @@
 
 <script>
 import { validUsername } from '../utils/validate'
+import Cookies from 'js-cookie';
 
 export default {
     name: 'Login',
@@ -198,13 +199,29 @@ export default {
                     return false
                 })
         },
+        goToPage() {
+            this.$nextTick(() => {
+                const headers = {
+                    Authorization: 'Bearer '+this.otherQuery,
+                    'Content-Type': 'application/json'
+                };
+                const encodedHeaders = btoa(JSON.stringify(headers));
+                // const urlWithHeaders = `/telescope?token=${this.otherQuery}`;
+                const urlWithHeaders = `/telescope`;
+                window.location.replace(urlWithHeaders);
+                // window.location.href = '/telescope'
+            })
+        },
         handleLogin() {
             this.$refs.loginForm.validate(valid => {
                 if (valid) {
                     this.loading = true
                     this.$store.dispatch('login', this.loginForm)
                         .then(response => {
-                            this.$router.push({ path: this.redirect || '/', query: this.otherQuery })
+                            this.goToPage();
+                            let exp = new Date(new Date() * 1 + 12222 * 1000);
+                            Cookies.set('token',response.access_token, { expires: exp , path: '/telescope' });
+                            // this.$router.push({ path: this.redirect || '/telescope', query: this.otherQuery })
                             this.loading = false
                         })
                         .catch(err => {

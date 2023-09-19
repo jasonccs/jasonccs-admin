@@ -14,6 +14,9 @@ import ElementPlus from 'element-plus';
 import 'virtual:svg-icons-register'
 import SvgIcon from '../js/components/SvgIcon/index.vue';
 
+// import App from './App.vue'
+import router from './router/router.js'
+
 const app = createApp({});
 
 Object.entries(import.meta.glob('./**/*.vue', { eager: true })).forEach(([path, definition]) => {
@@ -22,4 +25,5 @@ Object.entries(import.meta.glob('./**/*.vue', { eager: true })).forEach(([path, 
 app.component('svg-icon', SvgIcon);
 app.use(ElementPlus);
 app.use(store);
+app.use(router);
 app.mount('#app');
