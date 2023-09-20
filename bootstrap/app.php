@@ -11,7 +11,9 @@
 |
 */
 
-$app = new Illuminate\Foundation\Application(
+    use Illuminate\Support\Env;
+
+    $app = new Illuminate\Foundation\Application(
     $_ENV['APP_BASE_PATH'] ?? dirname(__DIR__)
 );
 
@@ -51,5 +53,8 @@ $app->singleton(
 | from the actual running of the application and sending responses.
 |
 */
-
+//    $environment = Env::getOrFail('APP_ENV');
+//    dd($environment);
+//$app->loadEnvironmentFrom('.env.local');
+//
 return $app;
