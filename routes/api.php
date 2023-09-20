@@ -27,7 +27,7 @@ use Illuminate\Support\Facades\Route;
 //});
 
 
-Route::namespace('App\Http\Controllers')->middleware('validation')->prefix('auth')->group(function ($outer) {
+Route::namespace('App\Http\Controllers')->middleware('validation')->prefix('auth')->group(function () {
 
     //抛出预期的错误，例如请求字段格式错误
     Route::get('/c', 'Controller@store'); // 使用注解方式实现表单验证

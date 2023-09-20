@@ -7,7 +7,6 @@ use App\Models\User\User;
 use App\Models\utils\JsonResponse;
 use App\Notifications\InvoicePaid;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Notification;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Str;
@@ -17,6 +16,11 @@ use Rap2hpoutre\LaravelLogViewer\LogViewerController;
     Route::get('logs', [LogViewerController::class, 'index']);
     // 数据监控面板
 //    Route::get('/telescope', [Controller::class, 'telescope']);
+
+//    Route::get('login', function (Request $request) {
+//        return JsonResponse::success(geoip()->getLocation('120.79.183.110')->toArray());
+//    })->name('f-detail');
+
 
     Route::get('/slack', function (Request $request) {
         logger()->channel('slack')->critical(

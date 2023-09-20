@@ -13,13 +13,22 @@ import 'element-plus/dist/index.css'
 import ElementPlus from 'element-plus';
 import 'virtual:svg-icons-register'
 import SvgIcon from '../js/components/SvgIcon/index.vue';
+import router from '../js/router/router.js';
+import globalPlugin from '../js/router/router-plugin.js';
 
 const app = createApp({});
 
+app.use(ElementPlus);
+app.use(globalPlugin);
+app.use(store);
+app.use(router)
+window.router=router
+// app.provide('router', router);
+// app.use(routerPlugin, router);
+
+app.component('svg-icon', SvgIcon);
 Object.entries(import.meta.glob('./**/*.vue', { eager: true })).forEach(([path, definition]) => {
     app.component(path.split('/').pop().replace(/\.\w+$/, ''), definition.default);
 });
-app.component('svg-icon', SvgIcon);
-app.use(ElementPlus);
-app.use(store);
+
 app.mount('#app');

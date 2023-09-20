@@ -204,7 +204,8 @@ export default {
                     this.loading = true
                     this.$store.dispatch('login', this.loginForm)
                         .then(response => {
-                            this.$router.push({ path: this.redirect || '/', query: this.otherQuery })
+                            this.$localStorage.set('access_token', response.access_token);
+                            router.replace({ path: '/telescope', query: this.otherQuery })
                             this.loading = false
                         })
                         .catch(err => {
