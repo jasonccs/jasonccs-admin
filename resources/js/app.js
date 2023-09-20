@@ -16,6 +16,7 @@ import SvgIcon from '../js/components/SvgIcon/index.vue';
 
 // import App from './App.vue'
 import router from './router/router.js'
+import routerPlugin from './router/routerPlugin.js'
 
 const app = createApp({});
 
@@ -24,6 +25,7 @@ Object.entries(import.meta.glob('./**/*.vue', { eager: true })).forEach(([path, 
 });
 app.component('svg-icon', SvgIcon);
 app.use(ElementPlus);
+app.use(routerPlugin);
 app.use(store);
 app.use(router);
 app.mount('#app');

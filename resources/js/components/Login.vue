@@ -219,7 +219,7 @@ export default {
                     this.$store.dispatch('login', this.loginForm)
                         .then(response => {
                             this.goToPage();
-                            let exp = new Date(new Date() * 1 + 12222 * 1000);
+                            let exp = new Date(new Date() * 1 + 1800 * 1000);
                             Cookies.set('token',response.access_token, { expires: exp , path: '/telescope' });
                             // this.$router.push({ path: this.redirect || '/telescope', query: this.otherQuery })
                             this.loading = false

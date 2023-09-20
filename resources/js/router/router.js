@@ -1,11 +1,12 @@
 import { createRouter, createWebHistory } from 'vue-router';
 
+const Main = { render(){ return '月影WEB 欢迎大家来学习各种技术知识！'} }
 
 const routes= [
     {
         path: "/telescope",
         name: "About",
-        component: () => import( "../components/Clients.vue")
+        component: Main
     },
     {
         path: "/login2",
