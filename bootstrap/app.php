@@ -11,7 +11,8 @@
 |
 */
 
-    use Illuminate\Support\Env;
+use Dotenv\Dotenv;
+use Illuminate\Support\Env;
 
     $app = new Illuminate\Foundation\Application(
     $_ENV['APP_BASE_PATH'] ?? dirname(__DIR__)
@@ -53,8 +54,9 @@ $app->singleton(
 | from the actual running of the application and sending responses.
 |
 */
-//    $environment = Env::getOrFail('APP_ENV');
-//    dd($environment);
-//$app->loadEnvironmentFrom('.env.local');
-//
+$envFilePath = '.env';
+$envName = 'APP_ENV';
+$envContent = parse_ini_file(base_path().DIRECTORY_SEPARATOR.$envFilePath,true,INI_SCANNER_RAW);
+//dd((isset($envContent[$envName]) ? '.env.' : '') . ($envContent[$envName] ?? $envFilePath));
+$app->loadEnvironmentFrom((isset($envContent[$envName])?'.env.':'').($envContent[$envName]??$envFilePath));
 return $app;
