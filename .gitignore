@@ -24,3 +24,5 @@ yarn-error.log
 *.zip
 /public/.rnd
 composer.lock
+/public/xdebug.log
+/storage/debugbar/.gitignore
