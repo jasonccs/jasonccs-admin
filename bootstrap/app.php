@@ -58,5 +58,9 @@ $envFilePath = '.env';
 $envName = 'APP_ENV';
 $envContent = parse_ini_file(base_path().DIRECTORY_SEPARATOR.$envFilePath,true,INI_SCANNER_RAW);
 //dd((isset($envContent[$envName]) ? '.env.' : '') . ($envContent[$envName] ?? $envFilePath));
-$app->loadEnvironmentFrom((isset($envContent[$envName])?'.env.':'').($envContent[$envName]??$envFilePath));
+if ( file_exists(base_path((isset($envContent[$envName]) ? '.env.' : '') . ($envContent[$envName] ?? $envFilePath)))){
+    $app->loadEnvironmentFrom((isset($envContent[$envName])?'.env.':'').($envContent[$envName]??$envFilePath));
+}else{
+    die(base_path((isset($envContent[$envName]) ? '.env.' : '') . ($envContent[$envName] ?? $envFilePath)).' 配置文件未找到,请检查');
+}
 return $app;

@@ -26,3 +26,4 @@ yarn-error.log
 composer.lock
 /public/xdebug.log
 /storage/debugbar/.gitignore
+/vite.config.js.timestamp-1695342567514-e2dfb346e4889.mjs
